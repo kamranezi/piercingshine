@@ -2,7 +2,8 @@
 
 import Hero from '@/components/Hero';
 import InteractiveEar from '@/components/InteractiveEar';
-import StudioSlider from '@/components/StudioSlider'; // <-- Импорт нового компонента
+import StudioSlider from '@/components/StudioSlider';
+import SpecialOffers from '@/components/SpecialOffers'; // <-- Импорт
 import BookingWidget from '@/components/BookingWidget';
 
 import { motion } from "framer-motion";
@@ -11,19 +12,23 @@ import { ShieldCheck, Gem, GraduationCap } from "lucide-react";
 export default function Home() {
   return (
     <div className="w-full">
-      {/* 1. Hero блок */}
+      {/* 1. Главный экран */}
       <Hero />
 
-      {/* 2. Интерактивная карта */}
+      {/* 2. Акции и скидки (НОВОЕ) - ставим повыше, это продающий блок */}
+      <SpecialOffers />
+
+      {/* 3. Карта уха */}
       <InteractiveEar />
-      
-      {/* 3. Экскурсия по студии (НОВОЕ) */}
+
+      {/* 4. Слайдер студии */}
       <StudioSlider />
 
-      {/* 4. Преимущества (Features) */}
+      {/* 5. Преимущества */}
       <section className="py-16 md:py-24 px-4 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-          {[
+          {/* ... код преимуществ ... */}
+             {[
             {
               icon: <ShieldCheck className="w-12 h-12 text-[#D4AF37]" />,
               title: "Стерильность",
@@ -56,7 +61,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. Виджет записи */}
+      {/* 6. Кнопка записи */}
       <BookingWidget />
     </div>
   );
