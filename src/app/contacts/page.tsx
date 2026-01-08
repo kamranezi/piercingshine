@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Clock, Mail, MessageCircle, Navigation } from "lucide-react";
 import { contacts } from "@/lib/data";
+import { FaVk } from 'react-icons/fa';
 
 export default function Contacts() {
   return (
@@ -62,7 +63,7 @@ export default function Contacts() {
             </div>
 
             {/* Кнопки связи */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <a 
                 href={contacts.wa} 
                 target="_blank"
@@ -76,6 +77,13 @@ export default function Contacts() {
                 className="flex items-center justify-center p-4 bg-[#2AABEE] text-white rounded-xl font-bold hover:bg-[#229ed9] transition-colors"
               >
                 <Navigation className="mr-2" /> Telegram
+              </a>
+              <a 
+                href={contacts.vk} 
+                target="_blank"
+                className="flex items-center justify-center p-4 bg-[#4C75A3] text-white rounded-xl font-bold hover:bg-[#406891] transition-colors"
+              >
+                <FaVk className="mr-2" /> VK
               </a>
             </div>
           </motion.div>

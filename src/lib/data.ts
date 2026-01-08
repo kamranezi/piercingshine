@@ -57,5 +57,6 @@ export const contacts = {
   phone: "8 (980) 148-23-86",
   address: "г. Москва, м. Бауманская, ул. Бауманская 33/2",
   tg: "https://t.me/PIERCINGSHINE_BOT",
-  wa: "https://wa.me/79801482386"
+  wa: "https://wa.me/79801482386",
+  vk: "https://vk.com/?u=2&to=L3dyaXRlLTE4NTQ5MDU0Nz9zZWw9MCZ0bz0tMTg1NDkwNTQ3"
 };

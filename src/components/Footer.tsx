@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { MessageCircle, Phone, MapPin, Instagram } from "lucide-react";
+import { MessageCircle, Phone, MapPin } from "lucide-react";
 import { contacts } from "@/lib/data";
+import { FaVk } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -59,6 +60,9 @@ export default function Footer() {
               </a>
               <a href={contacts.wa} target="_blank" className="p-3 bg-white/5 rounded-full hover:bg-[#25D366] hover:text-white transition-all text-gray-400">
                 <Phone size={20} />
+              </a>
+              <a href={contacts.vk} target="_blank" className="p-3 bg-white/5 rounded-full hover:bg-[#4C75A3] hover:text-white transition-all text-gray-400">
+                <FaVk size={20} />
               </a>
             </div>
             <a 
