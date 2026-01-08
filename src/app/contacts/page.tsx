@@ -1,7 +1,5 @@
 "use client";
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Clock, Mail, MessageCircle, Navigation } from "lucide-react";
 import { contacts } from "@/lib/data";
@@ -9,7 +7,6 @@ import { contacts } from "@/lib/data";
 export default function Contacts() {
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
-      <Header />
 
       {/* Верхний блок с заголовком */}
       <section className="pt-32 pb-12 px-4 text-center">
@@ -106,7 +103,6 @@ export default function Contacts() {
         </div>
       </div>
 
-      <Footer />
     </main>
   );
 }

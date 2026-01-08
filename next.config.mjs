@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'static.tildacdn.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'loremflickr.com', // <--- ДОБАВИЛИ ЭТУ СТРОКУ
+      },
     ],
   },
   webpack(config) {

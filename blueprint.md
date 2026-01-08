@@ -12,6 +12,7 @@ This project is a Next.js application for a piercing studio called "Piercing Shi
     - **/(main)**: Main route group
       - **/about**: About Us page
       - **/contact**: Contact page
+      - **/gallery**: Gallery page
       - **/services**: Services page
       - **layout.tsx**: Main layout
       - **page.tsx**: Home page
@@ -40,6 +41,7 @@ This project is a Next.js application for a piercing studio called "Piercing Shi
 - **Shop Page**: Will feature piercing jewelry for sale.
 - **Academy Page**: Will provide information about piercing training courses.
 - **Contact Page**: Will have contact information and a contact form.
+- **Gallery Page**: Will showcase a gallery of piercing work.
 - **About Page**: Will tell the story of the studio and its artists.
 
 ## Current Plan
@@ -51,7 +53,7 @@ This project is a Next.js application for a piercing studio called "Piercing Shi
   - Design and implement the Home page with Hero, InteractiveEar, and BookingWidget components.
 
 - **Phase 2: Content Pages**
-  - Create and populate the Services, Shop, Academy, and Contact pages.
+  - Create and populate the Services, Shop, Academy, Gallery, and Contact pages.
 
 - **Phase 3: Advanced Features**
   - Implement a full-featured booking system.

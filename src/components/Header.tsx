@@ -14,6 +14,7 @@ export default function Header() {
           <Link href="/services" className="text-white hover:text-yellow-400 transition-colors">Услуги</Link>
           <Link href="/shop" className="text-white hover:text-yellow-400 transition-colors">Магазин</Link>
           <Link href="/academy" className="text-white hover:text-yellow-400 transition-colors">Академия</Link>
+          <Link href="/gallery" className="text-white hover:text-yellow-400 transition-colors">Галерея</Link>
           <Link href="/contacts" className="text-white hover:text-yellow-400 transition-colors">Контакты</Link>
         </div>
       </nav>

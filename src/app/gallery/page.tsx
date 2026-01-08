@@ -1,21 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
+import Image from "next/image"; // <-- Импорт Image
 
-// Временные данные (потом заменим на реальные фото из папки public)
+// Данные с работающими ссылками (LoremFlickr)
 const works = [
-  { id: 1, src: "https://images.unsplash.com/photo-1606907636173-979929944062?q=80&w=1000", tag: "Уши" },
-  { id: 2, src: "https://images.unsplash.com/photo-1535585090626-47b29a246830?q=80&w=1000", tag: "Лицо" },
-  { id: 3, src: "https://images.unsplash.com/photo-1629831518167-975540306e93?q=80&w=1000", tag: "Септум" },
-  { id: 4, src: "https://images.unsplash.com/photo-1599557404285-b152737604f5?q=80&w=1000", tag: "Микродермал" },
-  { id: 5, src: "https://images.unsplash.com/photo-1615715566373-c1573c77d61b?q=80&w=1000", tag: "Пупок" },
-  { id: 6, src: "https://images.unsplash.com/photo-1574315042622-44dfb676442c?q=80&w=1000", tag: "Микродермал" },
-  { id: 7, src: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=1000", tag: "Уши" },
-  { id: 8, src: "https://images.unsplash.com/photo-1596489397626-d245453675ec?q=80&w=1000", tag: "Лицо" },
+  { id: 1, src: "https://loremflickr.com/600/800/ear,piercing/all?lock=1", tag: "Уши" },
+  { id: 2, src: "https://loremflickr.com/600/800/face,piercing/all?lock=2", tag: "Лицо" },
+  { id: 3, src: "https://loremflickr.com/600/800/nose,piercing/all?lock=3", tag: "Септум" },
+  { id: 4, src: "https://loremflickr.com/600/800/microdermal/all?lock=4", tag: "Микродермал" },
+  { id: 5, src: "https://loremflickr.com/600/800/belly,piercing/all?lock=5", tag: "Пупок" },
+  { id: 6, src: "https://loremflickr.com/600/800/skin,piercing/all?lock=6", tag: "Микродермал" },
+  { id: 7, src: "https://loremflickr.com/600/800/earring/all?lock=7", tag: "Уши" },
+  { id: 8, src: "https://loremflickr.com/600/800/girl,piercing/all?lock=8", tag: "Лицо" },
 ];
 
 const filters = ["Все", "Уши", "Лицо", "Тело", "Микродермал"];
@@ -29,31 +28,30 @@ export default function Gallery() {
     : works.filter(w => w.tag === filter || (filter === "Лицо" && w.tag === "Септум"));
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] pt-24 pb-20">
-      <Header />
+    <div className="min-h-screen bg-[#0a0a0a] pt-28 pb-16 md:pt-32 md:pb-20">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-8 md:mb-12"
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            НАШИ <span className="text-[#D4AF37]">РАБОТЫ</span>
+          <h1 className="text-3xl md:text-6xl font-bold text-white mb-4 md:mb-6 uppercase">
+            Наши <span className="text-[#D4AF37]">Работы</span>
           </h1>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
             Идеальная симметрия, правильная анатомия и полное заживление.
             Смотрите результаты нашей работы.
           </p>
         </motion.div>
 
-        {/* Фильтры */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {/* Фильтры (скролл на мобильном) */}
+        <div className="flex overflow-x-auto pb-4 md:pb-0 justify-start md:justify-center gap-2 md:gap-4 mb-8 md:mb-12 no-scrollbar px-2">
           {filters.map((item) => (
             <button
               key={item}
               onClick={() => setFilter(item)}
-              className={`px-6 py-2 rounded-full text-sm font-bold tracking-wider transition-all border ${
+              className={`px-4 py-2 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold tracking-wider transition-all border whitespace-nowrap ${
                 filter === item
                   ? "bg-[#D4AF37] text-black border-[#D4AF37]"
                   : "bg-transparent text-gray-500 border-white/10 hover:border-white hover:text-white"
@@ -80,13 +78,21 @@ export default function Gallery() {
               onClick={() => setSelectedImage(work.src)}
             >
               <div className="rounded-xl overflow-hidden border border-white/5 bg-[#141414]">
-                <img
+                {/* Для Masonry лучше использовать width/height + style: auto, 
+                   чтобы браузер понимал высоту блока 
+                */}
+                <Image
                   src={work.src}
                   alt={work.tag}
+                  width={600}
+                  height={800}
                   className="w-full h-auto transform transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ width: '100%', height: 'auto' }} 
                 />
-                {/* Overlay при наведении */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                
+                {/* Overlay при наведении (скрываем на мобильном, чтобы не мешал) */}
+                <div className="hidden md:flex absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center">
                   <span className="text-[#D4AF37] font-bold tracking-widest border border-[#D4AF37] px-4 py-2 rounded uppercase text-xs">
                     Посмотреть
                   </span>
@@ -103,18 +109,22 @@ export default function Gallery() {
           className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <button className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors">
-            <X size={40} />
+          <button className="absolute top-4 right-4 md:top-6 md:right-6 text-white/50 hover:text-white transition-colors z-50">
+            <X size={32} />
           </button>
-          <img 
-            src={selectedImage} 
-            alt="Full size" 
-            className="max-w-full max-h-[90vh] rounded-lg shadow-2xl shadow-[#D4AF37]/10" 
-          />
+          
+          <div className="relative w-full max-w-4xl max-h-[85vh] h-full flex items-center justify-center">
+             <Image 
+                src={selectedImage} 
+                alt="Full size"
+                fill
+                className="object-contain rounded-lg"
+                sizes="100vw"
+             />
+          </div>
         </div>
       )}
 
-      <Footer />
-    </main>
+    </div>
   );
 }
