@@ -8,7 +8,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
   { name: "Главная", href: "/" },
+  { name: "О нас", href: "/about" },
   { name: "Услуги", href: "/services" },
+  { name: "Мастера", href: "/masters"},
   { name: "Магазин", href: "/shop" },
   { name: "Академия", href: "/academy" },
   { name: "Галерея", href: "/gallery" },

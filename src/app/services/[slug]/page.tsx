@@ -4,45 +4,23 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Clock, AlertCircle, ShieldCheck, Zap } from "lucide-react";
-
-// Данные с LoremFlickr
-const detailedServices: Record<string, any> = {
-  "helix": {
-    title: "Хеликс (Helix)",
-    price: "2 000 ₽",
-    description: "Прокол верхнего хряща уха. Один из самых популярных видов пирсинга.",
-    healing: "3-6 месяцев",
-    painLevel: 4,
-    jewelry: "Лабрет, Кольцо",
-    care: ["Не спать на ухе", "Обрабатывать мирамистином", "Даунсайз через 3 недели"],
-    image: "https://loremflickr.com/1200/800/ear,piercing/all?lock=20"
-  },
-  "septum": {
-    title: "Септум",
-    price: "2 500 ₽",
-    description: "Прокол носовой перегородки. Заживает быстро и легко прячется.",
-    healing: "4-8 недель",
-    painLevel: 3,
-    jewelry: "Циркуляр, Кликер",
-    care: ["Не трогать руками", "Ванночки с физраствором", "Можно прятать"],
-    image: "https://loremflickr.com/1200/800/nose,piercing/all?lock=21"
-  },
-  "default": {
-    title: "Пирсинг",
-    price: "от 2 000 ₽",
-    description: "Профессиональный прокол.",
-    healing: "Индивидуально",
-    painLevel: 5,
-    jewelry: "Титан",
-    care: ["Соблюдать гигиену", "Исключить бани"],
-    image: "https://loremflickr.com/1200/800/piercing/all?lock=22"
-  }
-};
+import { allServices } from "@/lib/data"; // Импортируем наши данные
 
 export default function ServiceSlugPage({ params }: { params: { slug: string } }) {
-  const serviceKey = Object.keys(detailedServices).includes(params.slug) ? params.slug : "default";
-  const service = detailedServices[serviceKey];
-  if (serviceKey === "default") service.title = `Пирсинг: ${decodeURIComponent(params.slug)}`;
+  // Ищем услугу по slug
+  const foundService = allServices.find((s) => s.slug === params.slug);
+
+  // Если услуга не найдена, используем дефолтные данные (чтобы не было 404/ошибок при разработке)
+  const service = foundService || {
+    title: `Услуга: ${decodeURIComponent(params.slug)}`,
+    price: "по запросу",
+    description: "Подробное описание этой услуги уточняйте у администратора.",
+    healing: "Индивидуально",
+    painLevel: 0,
+    jewelry: "Титан ASTM F-136",
+    care: ["Следуйте рекомендациям мастера", "Соблюдайте гигиену"],
+    image: "https://loremflickr.com/1200/800/piercing/all" // Заглушка
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
@@ -57,7 +35,7 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
             fill
             className="object-cover"
             priority
-            sizes="100vw" // Важно для LCP (Largest Contentful Paint)
+            sizes="100vw"
           />
         </div>
         
@@ -69,12 +47,12 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
               className="inline-flex items-center text-gray-300 hover:text-white mb-4 md:mb-6 transition-colors text-xs md:text-sm font-bold uppercase tracking-wider bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10"
             >
               <ArrowLeft size={14} className="mr-2" />
-              Назад
+              Назад к услугам
             </Link>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-3xl md:text-6xl font-bold text-white mb-2 md:mb-4 shadow-black drop-shadow-lg"
+              className="text-3xl md:text-6xl font-bold text-white mb-2 md:mb-4 shadow-black drop-shadow-lg leading-tight"
             >
               {service.title}
             </motion.h1>
@@ -86,7 +64,7 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
       <section className="py-8 md:py-16 px-4 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-16">
           
-          {/* Левая колонка (Описание) - на мобильном идет второй */}
+          {/* Левая колонка (Описание) */}
           <div className="lg:col-span-2 space-y-8 md:space-y-12 order-2 lg:order-1">
             <div>
               <h2 className="text-xl md:text-2xl font-bold text-white mb-4">О процедуре</h2>
@@ -105,12 +83,12 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
               
               <div className="bg-[#141414] p-5 rounded-xl border border-white/5">
                 <div className="text-[#D4AF37] mb-2"><Zap size={24} /></div>
-                <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">Боль</div>
+                <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">Болевые ощущения</div>
                 <div className="flex items-center space-x-1">
                   {[...Array(10)].map((_, i) => (
                     <div 
                       key={i} 
-                      className={`w-1.5 h-1.5 rounded-full ${i < service.painLevel ? 'bg-[#D4AF37]' : 'bg-gray-700'}`} 
+                      className={`w-1.5 h-1.5 rounded-full ${i < (service.painLevel || 0) ? 'bg-[#D4AF37]' : 'bg-gray-700'}`} 
                     />
                   ))}
                 </div>
@@ -119,7 +97,7 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
               <div className="bg-[#141414] p-5 rounded-xl border border-white/5">
                 <div className="text-[#D4AF37] mb-2"><ShieldCheck size={24} /></div>
                 <div className="text-xs text-gray-500 uppercase tracking-wider mb-1">Украшение</div>
-                <div className="font-bold text-white text-sm md:text-base">{service.jewelry}</div>
+                <div className="font-bold text-white text-sm md:text-base leading-tight">{service.jewelry}</div>
               </div>
             </div>
 
@@ -130,7 +108,7 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
                 Правила ухода
               </h3>
               <ul className="space-y-4">
-                {service.care?.map((rule: string, index: number) => (
+                {service.care?.map((rule, index) => (
                   <li key={index} className="flex items-start text-gray-300 text-sm md:text-base">
                     <span className="w-6 h-6 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] flex items-center justify-center text-xs font-bold mr-3 md:mr-4 shrink-0 mt-0.5">
                       {index + 1}
@@ -142,10 +120,10 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
             </div>
           </div>
 
-          {/* Правая колонка (Цена) - На мобильном идет первой */}
+          {/* Правая колонка (Цена) */}
           <div className="lg:col-span-1 order-1 lg:order-2">
             <div className="sticky top-24 bg-[#141414] border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl shadow-black/50">
-              <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Стоимость</div>
+              <div className="text-gray-400 text-xs uppercase tracking-wider mb-2">Стоимость работы</div>
               <div className="text-3xl md:text-5xl font-bold text-white mb-6 md:mb-8">{service.price}</div>
               
               <a 
@@ -156,7 +134,7 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
                 Записаться
               </a>
               <p className="mt-4 text-xs text-center text-gray-600">
-                Украшение оплачивается отдельно
+                Стоимость украшения оплачивается отдельно и зависит от выбранного материала.
               </p>
             </div>
           </div>

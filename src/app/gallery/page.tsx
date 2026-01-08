@@ -1,130 +1,157 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { X } from "lucide-react";
-import Image from "next/image"; // <-- Импорт Image
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
-// Данные с работающими ссылками (LoremFlickr)
-const works = [
-  { id: 1, src: "https://loremflickr.com/600/800/ear,piercing/all?lock=1", tag: "Уши" },
-  { id: 2, src: "https://loremflickr.com/600/800/face,piercing/all?lock=2", tag: "Лицо" },
-  { id: 3, src: "https://loremflickr.com/600/800/nose,piercing/all?lock=3", tag: "Септум" },
-  { id: 4, src: "https://loremflickr.com/600/800/microdermal/all?lock=4", tag: "Микродермал" },
-  { id: 5, src: "https://loremflickr.com/600/800/belly,piercing/all?lock=5", tag: "Пупок" },
-  { id: 6, src: "https://loremflickr.com/600/800/skin,piercing/all?lock=6", tag: "Микродермал" },
-  { id: 7, src: "https://loremflickr.com/600/800/earring/all?lock=7", tag: "Уши" },
-  { id: 8, src: "https://loremflickr.com/600/800/girl,piercing/all?lock=8", tag: "Лицо" },
-];
+// Типы данных
+type Category = "Уши" | "Брови" | "Нос" | "Губы" | "Микродермал" | "Пупок" | "Язык" | "Интимка";
 
-const filters = ["Все", "Уши", "Лицо", "Тело", "Микродермал"];
+interface PortfolioItem {
+  id: number;
+  category: Category;
+  src: string;
+  alt: string;
+}
 
-export default function Gallery() {
-  const [filter, setFilter] = useState("Все");
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+// Данные галереи
+const portfolioData: Record<Category, string[]> = {
+  "Уши": [
+    "https://static.tildacdn.com/tild6362-3837-4963-b464-353539623231/__6.png",
+    "https://static.tildacdn.com/tild3534-6564-4139-b336-383737313933/__3.png",
+    "https://static.tildacdn.com/tild3335-3366-4336-a138-353963333534/photo_2025-04-28_22-.png",
+    "https://static.tildacdn.com/tild3734-6639-4033-b231-636334666337/__18.png",
+  ],
+  "Брови": [
+    "https://static.tildacdn.com/tild6338-3835-4861-a163-663963636365/__3.png",
+    "https://static.tildacdn.com/tild6463-3830-4432-b362-623730366131/__4.png",
+    "https://static.tildacdn.com/tild3863-3638-4362-b534-313064363534/noroot.png",
+    "https://static.tildacdn.com/tild3335-3137-4664-b336-363734323430/__1.png",
+  ],
+  "Нос": [
+    "http://googleusercontent.com/image_collection/image_retrieval/18103269175223194961_0",
+    "http://googleusercontent.com/image_collection/image_retrieval/18103269175223194961_1",
+    "http://googleusercontent.com/image_collection/image_retrieval/18103269175223194961_2",
+    "http://googleusercontent.com/image_collection/image_retrieval/18103269175223194961_3",
+  ],
+  "Губы": [
+    "http://googleusercontent.com/image_collection/image_retrieval/6717800357961279375_0",
+    "http://googleusercontent.com/image_collection/image_retrieval/6717800357961279375_1",
+    "http://googleusercontent.com/image_collection/image_retrieval/6717800357961279375_2",
+    "http://googleusercontent.com/image_collection/image_retrieval/6717800357961279375_3",
+  ],
+  "Микродермал": [
+    "http://googleusercontent.com/image_collection/image_retrieval/2339881237055348158_0",
+    "http://googleusercontent.com/image_collection/image_retrieval/2339881237055348158_1",
+    "http://googleusercontent.com/image_collection/image_retrieval/2339881237055348158_2",
+    "http://googleusercontent.com/image_collection/image_retrieval/2339881237055348158_3",
+  ],
+  "Пупок": [
+    "http://googleusercontent.com/image_collection/image_retrieval/13585882876831550884_0",
+    "http://googleusercontent.com/image_collection/image_retrieval/13585882876831550884_1",
+    "http://googleusercontent.com/image_collection/image_retrieval/13585882876831550884_2",
+    "http://googleusercontent.com/image_collection/image_retrieval/13585882876831550884_3",
+  ],
+  "Язык": [
+    "http://googleusercontent.com/image_collection/image_retrieval/13901998214114560618_0",
+    "http://googleusercontent.com/image_collection/image_retrieval/13901998214114560618_1",
+    "http://googleusercontent.com/image_collection/image_retrieval/13901998214114560618_2",
+    "http://googleusercontent.com/image_collection/image_retrieval/13901998214114560618_3",
+  ],
+  "Интимка": [
+    "http://googleusercontent.com/image_collection/image_retrieval/15295484526714072574_0",
+    "http://googleusercontent.com/image_collection/image_retrieval/15295484526714072574_1",
+    "http://googleusercontent.com/image_collection/image_retrieval/15295484526714072574_2",
+    "http://googleusercontent.com/image_collection/image_retrieval/15295484526714072574_3",
+  ],
+};
 
-  const filteredWorks = filter === "Все" 
-    ? works 
-    : works.filter(w => w.tag === filter || (filter === "Лицо" && w.tag === "Септум"));
+const categories = Object.keys(portfolioData) as Category[];
+
+export default function Portfolio() {
+  const [activeCategory, setActiveCategory] = useState<Category>("Уши");
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] pt-28 pb-16 md:pt-32 md:pb-20">
+    <section className="min-h-screen bg-[#0a0a0a] py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Заголовок и описание */}
+        <div className="text-center mb-16 space-y-6">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-bold text-white uppercase tracking-wider"
+          >
+            Фото наших <span className="text-[#D4AF37]">работ</span>
+          </motion.h2>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed"
+          >
+            Предлагаем Вам портфолио, выполненное нашими мастерами. Это всего лишь небольшая часть работ, 
+            список которых ежедневно пополняется новыми. Сайт не может вместить все из них, поэтому приглашаем вас в гости — 
+            в студии доступен расширенный каталог проколов, который поможет подобрать идеальный для себя вариант.
+          </motion.p>
+        </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8 md:mb-12"
-        >
-          <h1 className="text-3xl md:text-6xl font-bold text-white mb-4 md:mb-6 uppercase">
-            Наши <span className="text-[#D4AF37]">Работы</span>
-          </h1>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
-            Идеальная симметрия, правильная анатомия и полное заживление.
-            Смотрите результаты нашей работы.
-          </p>
-        </motion.div>
-
-        {/* Фильтры (скролл на мобильном) */}
-        <div className="flex overflow-x-auto pb-4 md:pb-0 justify-start md:justify-center gap-2 md:gap-4 mb-8 md:mb-12 no-scrollbar px-2">
-          {filters.map((item) => (
+        {/* Навигация по категориям (Табы) */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          {categories.map((category) => (
             <button
-              key={item}
-              onClick={() => setFilter(item)}
-              className={`px-4 py-2 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold tracking-wider transition-all border whitespace-nowrap ${
-                filter === item
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={`px-6 py-2 rounded-full text-sm md:text-base font-medium transition-all duration-300 border ${
+                activeCategory === category
                   ? "bg-[#D4AF37] text-black border-[#D4AF37]"
-                  : "bg-transparent text-gray-500 border-white/10 hover:border-white hover:text-white"
+                  : "bg-transparent text-gray-400 border-white/10 hover:border-[#D4AF37] hover:text-[#D4AF37]"
               }`}
             >
-              {item}
+              {category}
             </button>
           ))}
         </div>
 
-        {/* Masonry Grid (CSS Columns) */}
+        {/* Сетка изображений */}
         <motion.div 
           layout
-          className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {filteredWorks.map((work) => (
-            <motion.div
-              layout
-              key={work.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="break-inside-avoid relative group cursor-zoom-in"
-              onClick={() => setSelectedImage(work.src)}
-            >
-              <div className="rounded-xl overflow-hidden border border-white/5 bg-[#141414]">
-                {/* Для Masonry лучше использовать width/height + style: auto, 
-                   чтобы браузер понимал высоту блока 
-                */}
+          <AnimatePresence mode="popLayout">
+            {portfolioData[activeCategory].map((src, index) => (
+              <motion.div
+                key={`${activeCategory}-${index}`}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.3 }}
+                className="group relative aspect-[3/4] rounded-xl overflow-hidden bg-[#141414] border border-white/5"
+              >
                 <Image
-                  src={work.src}
-                  alt={work.tag}
-                  width={600}
-                  height={800}
-                  className="w-full h-auto transform transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  style={{ width: '100%', height: 'auto' }} 
+                  src={src}
+                  alt={`${activeCategory} работа ${index + 1}`}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
                 
-                {/* Overlay при наведении (скрываем на мобильном, чтобы не мешал) */}
-                <div className="hidden md:flex absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center">
-                  <span className="text-[#D4AF37] font-bold tracking-widest border border-[#D4AF37] px-4 py-2 rounded uppercase text-xs">
-                    Посмотреть
+                {/* Оверлей при наведении */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-[#D4AF37] text-lg font-bold uppercase tracking-widest border border-[#D4AF37] px-4 py-2 rounded-lg">
+                    {activeCategory}
                   </span>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </motion.div>
+
       </div>
-
-      {/* Lightbox (Модальное окно просмотра) */}
-      {selectedImage && (
-        <div 
-          className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button className="absolute top-4 right-4 md:top-6 md:right-6 text-white/50 hover:text-white transition-colors z-50">
-            <X size={32} />
-          </button>
-          
-          <div className="relative w-full max-w-4xl max-h-[85vh] h-full flex items-center justify-center">
-             <Image 
-                src={selectedImage} 
-                alt="Full size"
-                fill
-                className="object-contain rounded-lg"
-                sizes="100vw"
-             />
-          </div>
-        </div>
-      )}
-
-    </div>
+    </section>
   );
 }
