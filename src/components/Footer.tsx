@@ -18,15 +18,17 @@ export default function Footer() {
   const yandexMapUrl = "https://yandex.ru/maps/org/piercingshine/13580233451/?from=mapframe&ll=37.677014%2C55.776614&z=17";
 
   return (
-    <footer className="bg-[#050505] border-t border-white/10 pt-12 pb-8">
+    <footer className="bg-[#050505] border-t border-white/10 pt-8 pb-8">
       <div className="max-w-5xl mx-auto px-4 text-center">
-      <a 
-              href="https://n1607698.yclients.com" 
-              target="_blank"
-              className="block w-full py-3 text-center bg-[#D4AF37] text-black font-bold rounded-lg hover:bg-white transition-colors"
-            >
-              ОНЛАЙН ЗАПИСЬ
-            </a>
+        
+        <a 
+          href="https://n1607698.yclients.com" 
+          target="_blank"
+          className="inline-block mb-6 px-12 py-3 text-center bg-[#D4AF37] text-black font-bold rounded-lg hover:bg-white transition-colors uppercase tracking-wider text-sm"
+        >
+          Онлайн запись
+        </a>
+
         {/* Лого и соцсети */}
         <div className="mb-8">
           <Link href="/" className="inline-block mb-6">

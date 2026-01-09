@@ -119,7 +119,6 @@ export default function Home() {
       <FAQ />
 
       {/* Виджет записи */}
-      <BookingWidget />
     </div>
   );
 }

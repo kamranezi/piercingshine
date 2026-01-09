@@ -6,15 +6,15 @@ import { Star, MessageCircle } from "lucide-react";
 export default function YandexReviews() {
   return (
     <section className="py-12 md:py-16 bg-[#0a0a0a] relative z-10 border-t border-white/5">
-      {/* 1. Вернули широкую сетку max-w-7xl, чтобы заполнить экран */}
-      <div className="max-w-7xl mx-auto px-4">
+      {/* Жестко ограничиваем ширину до 650px и центрируем */}
+      <div className="max-w-[650px] mx-auto px-4">
         
         {/* Заголовок */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-10"
+          className="text-center mb-8"
         >
            <div className="inline-flex items-center justify-center p-3 bg-[#D4AF37]/10 rounded-full mb-3">
               <Star className="text-[#D4AF37]" size={20} fill="#D4AF37" />
@@ -22,34 +22,25 @@ export default function YandexReviews() {
            <h2 className="text-2xl md:text-3xl font-bold uppercase text-white mb-2">
              Живые <span className="text-[#D4AF37]">отзывы</span>
            </h2>
-           <p className="text-gray-400 text-sm max-w-lg mx-auto">
-             Рейтинг 5.0 на Яндекс.Картах. Читайте мнения наших клиентов.
+           <p className="text-gray-400 text-sm">
+             Рейтинг 5.0 на Яндекс.Картах
            </p>
         </motion.div>
 
-        {/* 2. Контейнер виджета
-           overflow-hidden обрезает всё лишнее.
-        */}
+        {/* Контейнер виджета */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.75 }}
+          whileInView={{ opacity: 1, scale : 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="w-full h-[600px] bg-[#141414] rounded-2xl overflow-hidden border border-white/10 relative shadow-2xl"
         >
-          {/* Хитрость с масштабом (Zoom Out):
-             - scale-[0.85]: уменьшаем содержимое до 85% от реального размера.
-             - w-[117.65%] h-[117.65%]: увеличиваем физический размер iframe, 
-               чтобы после уменьшения он заполнил ровно 100% контейнера.
-               (Формула: 100 / 0.85 ≈ 117.65)
-          */}
-          <div className="w-[117.65%] h-[117.65%] origin-top-left transform scale-[0.85]">
-            <iframe 
-                src="https://yandex.ru/maps-reviews-widget/13580233451?comments"
-                className="w-full h-full border-0"
-                title="Отзывы Piercing Shine на Яндекс.Картах"
-            />
-          </div>
+          {/* Iframe занимает 100% ширины контейнера (который теперь 650px) */}
+          <iframe 
+            src="https://yandex.ru/maps-reviews-widget/13580233451?comments"
+            className="w-full h-full border-0"
+            title="Отзывы Piercing Shine на Яндекс.Картах"
+          />
 
           {/* Ссылка для SEO */}
           <div className="absolute bottom-4 left-0 w-full text-center pointer-events-none z-0 opacity-0">
