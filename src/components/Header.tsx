@@ -2,16 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation"; // Чтобы подсвечивать активную ссылку
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from 'next/image';
 
 const links = [
   { name: "Главная", href: "/" },
   { name: "О нас", href: "/about" },
   { name: "Услуги", href: "/services" },
   { name: "Мастера", href: "/masters"},
-  { name: "Магазин", href: "/shop" },
+  { name: "Украшения", href: "/shop" },
   { name: "Академия", href: "/academy" },
   { name: "Галерея", href: "/gallery" },
   { name: "Контакты", href: "/contacts" },
@@ -28,8 +29,11 @@ export default function Header() {
           
           {/* ЛОГОТИП */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-bold tracking-widest text-white uppercase" onClick={() => setIsOpen(false)}>
-              Piercing<span className="text-[#D4AF37]">Shine</span>
+            <Link href="/" className="flex items-center space-x-2" onClick={() => setIsOpen(false)}>
+              <Image src="/favicon.svg" alt="Piercing Shine Logo" width={48} height={48} />
+              <span className="text-2xl font-bold tracking-widest text-white uppercase">
+                Piercing<span className="text-[#D4AF37]">Shine</span>
+              </span>
             </Link>
           </div>
 

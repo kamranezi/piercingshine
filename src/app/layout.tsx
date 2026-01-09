@@ -9,6 +9,9 @@ const montserrat = Montserrat({ subsets: ["latin", "cyrillic"] });
 export const metadata: Metadata = {
   title: "Piercing Shine | Студия безопасного пирсинга",
   description: "Профессиональный пирсинг, микродермалы и удаление тату в Москве.",
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
