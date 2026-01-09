@@ -1,24 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { categories, servicesData } from "@/lib/data"; // Импорт новых данных
+import { categories, servicesData } from "@/lib/data";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams, useRouter } from "next/navigation"; // Добавили useRouter
 
-export default function Services() {
-  const [activeCategory, setActiveCategory] = useState("ears");
+function ServicesContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // 1. Читаем категорию прямо из URL. Если её нет — ставим 'ears'
+  const activeCategory = searchParams.get("category") || "ears";
 
-  // Получаем услуги для выбранной категории
-  // @ts-ignore (игнорируем ошибку типизации ключа для простоты)
+  // Получаем услуги для текущей категории
+  // @ts-ignore
   const currentServices = servicesData[activeCategory] || [];
 
+  // Функция для смены категории
+  const handleCategoryChange = (categoryId: string) => {
+    // 2. Используем router.push для обновления URL. 
+    // scroll: false предотвращает скачок страницы вверх при переключении
+    router.push(`?category=${categoryId}`, { scroll: false });
+  };
+
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
-      <div className="pt-28 pb-16 md:pt-32 md:pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <motion.h1 
+    <>
+      <motion.h1 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-3xl md:text-5xl font-bold text-white mb-8 md:mb-12 text-center"
@@ -31,7 +41,7 @@ export default function Services() {
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
+              onClick={() => handleCategoryChange(cat.id)}
               className={`px-5 py-2 md:px-6 md:py-3 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider transition-all whitespace-nowrap border ${
                 activeCategory === cat.id
                   ? "bg-[#D4AF37] text-black border-[#D4AF37]"
@@ -61,6 +71,7 @@ export default function Services() {
                 >
                   <Link 
                     href={`/services/${service.slug}`}
+                    // Сохраняем скролл при переходе, Next.js сделает это автоматически
                     className="group block relative bg-[#141414] rounded-2xl overflow-hidden border border-white/5 hover:border-[#D4AF37]/50 transition-all hover:-translate-y-2 h-full flex flex-col"
                   >
                     {/* Картинка */}
@@ -96,13 +107,23 @@ export default function Services() {
                 </motion.div>
               ))
             ) : (
-              // Заглушка, если раздел пуст
               <div className="col-span-full text-center py-20 text-gray-500">
                 В этом разделе пока нет услуг. Выберите другую категорию.
               </div>
             )}
           </AnimatePresence>
         </motion.div>
+    </>
+  );
+}
+
+export default function Services() {
+  return (
+    <div className="min-h-screen bg-[#0a0a0a]">
+      <div className="pt-28 pb-16 md:pt-32 md:pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Suspense fallback={<div className="text-white text-center">Загрузка...</div>}>
+          <ServicesContent />
+        </Suspense>
       </div>
     </div>
   );

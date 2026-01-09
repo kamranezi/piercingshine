@@ -4,13 +4,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Clock, AlertCircle, ShieldCheck, Zap } from "lucide-react";
-import { allServices } from "@/lib/data"; // Импортируем наши данные
+import { allServices } from "@/lib/data";
 
 export default function ServiceSlugPage({ params }: { params: { slug: string } }) {
   // Ищем услугу по slug
   const foundService = allServices.find((s) => s.slug === params.slug);
 
-  // Если услуга не найдена, используем дефолтные данные (чтобы не было 404/ошибок при разработке)
+  // Если услуга не найдена, используем дефолтные данные
   const service = foundService || {
     title: `Услуга: ${decodeURIComponent(params.slug)}`,
     price: "по запросу",
@@ -19,14 +19,14 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
     painLevel: 0,
     jewelry: "Титан ASTM F-136",
     care: ["Следуйте рекомендациям мастера", "Соблюдайте гигиену"],
-    image: "https://loremflickr.com/1200/800/piercing/all" // Заглушка
+    image: "https://loremflickr.com/1200/800/piercing/all",
+    category: null 
   };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero Section */}
       <section className="relative h-[45vh] md:h-[60vh] min-h-[350px]">
-        {/* Картинка на фон */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-black/30 z-10" />
           <Image 
@@ -39,16 +39,19 @@ export default function ServiceSlugPage({ params }: { params: { slug: string } }
           />
         </div>
         
-        {/* Контент поверх картинки */}
         <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pb-8 md:pb-12">
           <div className="max-w-7xl mx-auto">
+            {/* --- ИСПРАВЛЕНИЕ ЗДЕСЬ --- */}
             <Link 
-              href="/services" 
+              // Мы изменили 'tab=' на 'category=', чтобы это совпадало с кодом на странице Services
+              href={service.category ? `/services?category=${service.category}` : "/services"} 
               className="inline-flex items-center text-gray-300 hover:text-white mb-4 md:mb-6 transition-colors text-xs md:text-sm font-bold uppercase tracking-wider bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10"
             >
               <ArrowLeft size={14} className="mr-2" />
               Назад к услугам
             </Link>
+            {/* ------------------------- */}
+
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

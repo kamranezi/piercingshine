@@ -4,6 +4,7 @@ import Hero from '@/components/Hero';
 import InteractiveEar from '@/components/InteractiveEar';
 import StudioSlider from '@/components/StudioSlider';
 import SpecialOffers from '@/components/SpecialOffers'; // <-- Импорт
+import ServicesSection from '@/components/ServicesSection';
 import BookingWidget from '@/components/BookingWidget';
 
 import { motion } from "framer-motion";
@@ -20,6 +21,8 @@ export default function Home() {
 
       {/* 3. Акции и скидки (НОВОЕ) - ставим повыше, это продающий блок */}
       <SpecialOffers />
+
+      <ServicesSection />
 
       {/* 4. Слайдер студии */}
       <StudioSlider />

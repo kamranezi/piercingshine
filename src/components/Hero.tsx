@@ -3,57 +3,58 @@
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ChevronRight, ChevronLeft } from "lucide-react";
+import Link from "next/link"; // Используем Link для быстрой навигации
 
-// Популярные проколы с ценами
+// Популярные проколы с правильными ссылками на категории
 const popularPiercings = [
   {
     id: 1,
     title: "Пирсинг Уха",
-    price: "от 3500 ₽",
+    price: "от 2000 ₽", // Обновил цену согласно твоим данным
     image: "https://static.tildacdn.com/tild3264-6336-4765-a137-656135633163/__1.png",
-    link: "/services/ear"
+    link: "/services?category=ears" // Ссылка на категорию "Уши"
   },
   {
     id: 2,
     title: "Пирсинг губ",
     price: "от 3500 ₽",
     image: "https://static.tildacdn.com/tild3939-3833-4661-a539-653833343261/_.png",
-    link: "/services/lips"
+    link: "/services?category=lips" // Ссылка на категорию "Губы"
   },
   {
     id: 3,
     title: "Пирсинг языка",
     price: "от 3500 ₽",
     image: "https://static.tildacdn.com/tild3463-6132-4836-a262-646565326336/_.png",
-    link: "/services/tongue"
+    link: "/services?category=tongue" // Ссылка на категорию "Язык"
   },
   {
     id: 4,
     title: "Пирсинг носа",
-    price: "от 3500 ₽",
+    price: "от 2500 ₽",
     image: "https://static.tildacdn.com/tild3234-3334-4266-a631-356264336338/_.png",
-    link: "/services/nose"
+    link: "/services?category=nose" // Ссылка на категорию "Нос"
   },
   {
     id: 5,
     title: "Пирсинг брови",
     price: "от 3500 ₽",
     image: "https://static.tildacdn.com/tild3865-3237-4238-a466-353234326362/_.png",
-    link: "/services/eyebrow"
+    link: "/services?category=eyebrow" // Ссылка на категорию "Бровь"
   },
   {
     id: 6,
     title: "Пирсинг пупка",
     price: "от 3500 ₽",
     image: "https://static.tildacdn.com/tild6133-6535-4564-b231-323332653737/_.png",
-    link: "/services/navel"
+    link: "/services?category=navel" // Ссылка на категорию "Пупок"
   },
   {
     id: 7,
     title: "Пирсинг соска",
     price: "от 3500 ₽",
     image: "https://static.tildacdn.com/tild3635-3534-4933-b831-636134653635/_.png",
-    link: "/services/nipple"
+    link: "/services?category=intimate" // Ссылка на категорию "Интимный"
   },
 ];
 
@@ -198,31 +199,26 @@ export default function Hero() {
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {popularPiercings.map((item) => (
-                <a 
+                <Link 
                   href={item.link} 
                   key={item.id}
                   className="relative flex-shrink-0 w-[280px] sm:w-[320px] h-[420px] snap-center group"
                 >
                   <div className="w-full h-full bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group-hover:border-[#D4AF37]/50 transition-all duration-300 relative">
                     
-                    {/* Изображение - Убраны отступы (padding), высота h-full, object-cover для заполнения */}
+                    {/* Изображение */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                      {/* Градиент за картинкой */}
                       <div className="absolute inset-0 bg-[radial-gradient(circle,_rgba(212,175,55,0.1)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      
                       <div className="relative w-full h-full transition-transform duration-500 group-hover:scale-105">
                         <img
                           src={item.image}
                           alt={item.title}
-                          // Используем object-cover, чтобы заполнить всю карточку, либо object-contain, если важно не обрезать детали
-                          // В данном случае лучше object-cover для стиля "без отступов", но с учетом прозрачности PNG может быть лучше contain
-                          // Если картинки с прозрачным фоном, оставим contain но на всю высоту
                           className="w-full h-full object-cover" 
                         />
                       </div>
                     </div>
 
-                    {/* Текст снизу - градиент для читаемости */}
+                    {/* Текст снизу */}
                     <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black via-black/80 to-transparent pt-16">
                       <h3 className="text-2xl font-bold text-white mb-1 group-hover:text-[#D4AF37] transition-colors">
                         {item.title}
@@ -234,9 +230,8 @@ export default function Hero() {
                         </div>
                       </div>
                     </div>
-                    
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
 
