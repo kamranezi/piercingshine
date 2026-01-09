@@ -1,8 +1,8 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import { ArrowRight, Gift } from "lucide-react";
+import { ArrowRight, Gift, ChevronLeft, ChevronRight } from "lucide-react";
 
 const offers = [
   {
@@ -38,12 +38,59 @@ const offers = [
 ];
 
 export default function SpecialOffers() {
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = () => {
+    if (sliderRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
+      
+      // Определяем текущий индекс карточки
+      const cardWidth = sliderRef.current.querySelector('div')?.offsetWidth || 0;
+      const index = Math.round(scrollLeft / (cardWidth + 24)); // 24 = gap-6
+      setCurrentIndex(index);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener("resize", checkScroll);
+    return () => window.removeEventListener("resize", checkScroll);
+  }, []);
+
+  const scroll = (direction: "left" | "right") => {
+    if (sliderRef.current) {
+      const cardWidth = sliderRef.current.querySelector('div')?.offsetWidth || 0;
+      const scrollAmount = cardWidth + 24; // карточка + gap
+      sliderRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+      setTimeout(checkScroll, 300);
+    }
+  };
+
+  const scrollToIndex = (index: number) => {
+    if (sliderRef.current) {
+      const cardWidth = sliderRef.current.querySelector('div')?.offsetWidth || 0;
+      sliderRef.current.scrollTo({
+        left: index * (cardWidth + 24),
+        behavior: "smooth",
+      });
+      setTimeout(checkScroll, 300);
+    }
+  };
+
   return (
     <section className="py-20 bg-[#0a0a0a]">
       <div className="max-w-7xl mx-auto px-4">
         
         {/* Заголовок */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -57,11 +104,48 @@ export default function SpecialOffers() {
           </p>
         </div>
 
-        {/* Сетка карточек:
-            На мобильных: flex + overflow-x-auto (горизонтальный скролл)
-            На ПК: grid grid-cols-3 (обычная сетка)
-        */}
-        <div className="flex overflow-x-auto md:grid md:grid-cols-3 gap-6 pb-8 md:pb-0 scrollbar-hide snap-x snap-mandatory">
+        {/* Навигация: Стрелки по краям, точки посередине */}
+        <div className="flex items-center justify-between mb-6 md:hidden">
+          {/* Левая стрелка */}
+          <button 
+            onClick={() => scroll("left")}
+            disabled={!canScrollLeft}
+            className={`p-2 rounded-full border border-white/10 bg-[#141414] transition-colors ${!canScrollLeft ? 'opacity-30 cursor-not-allowed' : 'hover:bg-[#D4AF37] hover:text-black cursor-pointer'}`}
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          {/* Точки индикаторов по центру */}
+          <div className="flex gap-2">
+            {offers.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  currentIndex === index 
+                    ? 'bg-[#D4AF37] w-6' 
+                    : 'bg-white/30 hover:bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Правая стрелка */}
+          <button 
+            onClick={() => scroll("right")}
+            disabled={!canScrollRight}
+            className={`p-2 rounded-full border border-white/10 bg-[#141414] transition-colors ${!canScrollRight ? 'opacity-30 cursor-not-allowed' : 'hover:bg-[#D4AF37] hover:text-black cursor-pointer'}`}
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
+
+        {/* Сетка карточек */}
+        <div 
+          ref={sliderRef}
+          onScroll={checkScroll}
+          className="flex overflow-x-auto md:grid md:grid-cols-3 gap-6 pb-8 md:pb-0 scrollbar-hide snap-x snap-mandatory"
+        >
           {offers.map((offer, index) => (
             <motion.div
               key={index}
@@ -71,12 +155,10 @@ export default function SpecialOffers() {
               className="relative flex-shrink-0 w-[85vw] md:w-auto h-[400px] rounded-2xl overflow-hidden group border border-white/10 snap-center"
             >
               {/* Картинка на фоне */}
-              <Image
+              <img
                 src={offer.image}
                 alt={offer.title}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                sizes="(max-width: 768px) 85vw, 33vw"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               
               {/* Темный градиент для читаемости текста */}
@@ -96,6 +178,7 @@ export default function SpecialOffers() {
                 <a 
                    href="https://n1607698.yclients.com" 
                    target="_blank"
+                   rel="noopener noreferrer"
                    className="inline-flex items-center justify-center w-full py-3 bg-[#D4AF37] text-black font-bold rounded-lg hover:bg-white transition-colors uppercase text-sm tracking-widest"
                 >
                   Получить
@@ -108,11 +191,6 @@ export default function SpecialOffers() {
               </div>
             </motion.div>
           ))}
-        </div>
-        
-        {/* Подсказка для скролла на мобильном */}
-        <div className="md:hidden text-center mt-4 text-[#D4AF37] text-xs font-bold uppercase tracking-widest animate-pulse opacity-70">
-          ← Листайте акции →
         </div>
 
       </div>

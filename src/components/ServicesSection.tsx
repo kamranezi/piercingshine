@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { categories, servicesData } from '@/lib/data';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Eye } from 'lucide-react';
 import AdditionalServices from './AdditionalServices';
 
 // Define the type for a service, based on the structure in data.ts
@@ -35,7 +35,7 @@ export default function ServicesSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-           viewport={{ once: true }}
+          viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
             Наши <span className="text-[#D4AF37]">Услуги</span>
@@ -50,7 +50,7 @@ export default function ServicesSection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-           viewport={{ once: true }}
+          viewport={{ once: true }}
           className="mb-12 flex flex-wrap justify-center gap-2 md:gap-4"
         >
           {categories.map((category) => (
@@ -70,16 +70,25 @@ export default function ServicesSection() {
 
         {/* Services Table */}
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-             viewport={{ once: true }}
-            className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="overflow-x-auto rounded-2xl border border-white/10 bg-white/5"
         >
           <table className="w-full text-left">
             <thead className="bg-white/10">
               <tr>
-                <th className="p-4 md:p-5 text-sm font-bold tracking-wider">Прокол</th>
+                {/* Модифицированный заголовок:
+                    Добавлен flex-контейнер для выравнивания текста слева и иконки глаза справа.
+                    Иконка глаза видна только на мобильных (md:hidden).
+                */}
+                <th className="p-4 md:p-5 text-sm font-bold tracking-wider">
+                  <div className="flex items-center justify-between">
+                    <span>Прокол</span>
+                    <Eye className="w-4 h-4 text-gray-400 md:hidden" />
+                  </div>
+                </th>
                 <th className="p-4 md:p-5 text-sm font-bold tracking-wider hidden md:table-cell">Описание</th>
                 <th className="p-4 md:p-5 text-sm font-bold tracking-wider">Стоимость</th>
                 <th className="p-4 md:p-5 text-sm font-bold tracking-wider text-right hidden md:table-cell">
@@ -91,9 +100,9 @@ export default function ServicesSection() {
               {activeServices.map((service: Service) => (
                 <tr key={service.id} className="border-t border-white/10 hover:bg-white/5 transition-colors">
                   <td className="p-4 md:p-5 font-bold">
-                     <Link href={`/services/${service.slug}`} className="flex items-center justify-between gap-4 group transition-colors">
-                        <span className="group-hover:text-[#D4AF37] transition-colors">{service.title}</span>
-                        <ArrowRight className="w-4 h-4 text-[#D4AF37] shrink-0 md:hidden" />
+                    <Link href={`/services/${service.slug}`} className="flex items-center justify-between gap-4 group transition-colors">
+                      <span className="group-hover:text-[#D4AF37] transition-colors">{service.title}</span>
+                      <ArrowRight className="w-4 h-4 text-[#D4AF37] shrink-0 md:hidden" />
                     </Link>
                   </td>
                   <td className="p-4 md:p-5 text-gray-400 text-sm hidden md:table-cell">
@@ -115,13 +124,13 @@ export default function ServicesSection() {
           </table>
         </motion.div>
 
+        <AdditionalServices />
+
         <div className="text-center mt-8">
             <Link href="/services" className="text-[#D4AF37] font-bold hover:underline">
                 Смотреть все услуги &rarr;
             </Link>
         </div>
-
-        <AdditionalServices />
       </div>
     </section>
   );
