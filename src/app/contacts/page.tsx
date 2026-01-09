@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
@@ -79,7 +79,6 @@ export default function Contacts() {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Адрес студии</h3>
                   
-                  {/* Точная ссылка на организацию из вашего запроса */}
                   <a 
                     href="https://yandex.ru/maps/org/piercingshine/13580233451/?display-text=Piercing%20shine&from=mapframe&ll=37.666427%2C55.785312&mode=search&sll=37.400988%2C55.670747&source=mapframe&sspn=0.580902%2C0.202181&text=Piercing%20shine&um=constructor%3A0c3866164289456561574545565558&utm_source=share&z=14"
                     target="_blank"
@@ -104,7 +103,7 @@ export default function Contacts() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Режим работы</h3>
-                  <p className="text-gray-300 text-lg">Ежедневно: 12:00 — 21:00</p>
+                  <p className="text-gray-300 text-lg">Ежедневно: <span className="block sm:inline">12:00 — 21:00</span></p>
                   <p className="text-gray-500 text-sm mt-1">Работаем только по предварительной записи</p>
                 </div>
               </div>
