@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -21,6 +21,19 @@ const links = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+
+  // Блокируем скролл основной страницы, когда меню открыто
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    // Очистка при размонтировании компонента
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
@@ -77,9 +90,9 @@ export default function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0a0a0a] border-b border-white/10 overflow-hidden"
+            className="md:hidden bg-[#0a0a0a] border-b border-white/10 overflow-y-auto max-h-[calc(100vh-80px)]"
           >
-            <div className="px-4 py-6 space-y-4 flex flex-col items-center">
+            <div className="px-4 pt-6 pb-12 space-y-4 flex flex-col items-center">
               {links.map((link) => {
                 const isActive = pathname === link.href;
                 return (
