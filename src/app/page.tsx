@@ -28,7 +28,7 @@ export default function Home() {
       <StudioSlider />
 
       {/* 5. Преимущества */}
-      <section className="py-16 md:py-24 px-4 bg-[#0a0a0a]">
+      <section className="py-8 md:py-16 px-4 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {/* ... код преимуществ ... */}
              {[

@@ -86,7 +86,7 @@ export default function SpecialOffers() {
   };
 
   return (
-    <section className="py-20 bg-[#0a0a0a]">
+    <section className="pt-4 pb-8 md:pt-4 md:pb-8 bg-[#0a0a0a] text-white">
       <div className="max-w-7xl mx-auto px-4">
         
         {/* Заголовок */}

@@ -28,7 +28,7 @@ export default function ServicesSection() {
   const activeServices = servicesData[activeCategory] || [];
 
   return (
-    <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-[#0a0a0a] text-white">
+    <section className="pt-4 pb-8 md:pt-4 md:pb-8 bg-[#0a0a0a] text-white">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Title */}
         <motion.div

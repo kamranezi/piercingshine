@@ -121,7 +121,7 @@ export default function Hero() {
                 Нас выбрали уже тысячи клиентов
               </div>
               <h1 className="text-3xl md:text-6xl font-bold text-white mb-4 leading-tight">
-                СТУДИЯ <span className="text-[#D4AF37]">PIERCING SHINE</span>
+                СТУДИЯ <span className="text-[#D4AF37]">PIERCING SHINE</span> на Бауманской
               </h1>
               <p className="text-gray-300 text-sm md:text-lg leading-relaxed max-w-xl bg-black/30 p-4 rounded-xl border-l-2 border-[#D4AF37] backdrop-blur-sm">
                 Наша студия пирсинга в Москве обеспечивает индивидуальный подход и сервис 

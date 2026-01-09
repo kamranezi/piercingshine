@@ -28,7 +28,7 @@ export const allServices = [
     title: "Мочка уха",
     price: "2 500 ₽",
     description: "Прокол мочки уха - самый распространенный тип пирсинга в мире. Период заживления 2-3 месяца.",
-    image: "https://static.tildacdn.com/tild6434-3363-4134-a332-623266343136/_1.png",
+    image: "https://static.tildacdn.com/tild6362-3837-4963-b464-353539623231/__6.png", // Обновленное фото
     healing: "2-3 месяца",
     painLevel: 2,
     jewelry: "Лабрет, Штанга, Кольцо (после заживления)",
@@ -41,7 +41,7 @@ export const allServices = [
     title: "Мочки уха (два прокола)",
     price: "5 000 ₽",
     description: "Пара проколов мочек - самый популярный пирсинг в мире. Срок заживления - 2-3 месяца.",
-    image: "https://static.tildacdn.com/tild6434-3363-4134-a332-623266343136/_1.png",
+    image: "https://static.tildacdn.com/tild3534-6564-4139-b336-383737313933/__3.png", // Обновленное фото
     healing: "2-3 месяца",
     painLevel: 2,
     jewelry: "Лабрет, Штанга",

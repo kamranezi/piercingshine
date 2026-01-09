@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { X } from "lucide-react"; // Импортируем иконку крестика
 
 // Типы данных
 type Category = "Уши" | "Брови" | "Нос" | "Губы" | "Микродермал" | "Пупок" | "Язык" | "Интимка";
@@ -70,6 +71,16 @@ const categories = Object.keys(portfolioData) as Category[];
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState<Category>("Уши");
+  const [selectedImage, setSelectedImage] = useState<string | null>(null); // Состояние для открытого фото
+
+  // Блокировка скролла при открытом модальном окне
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [selectedImage]);
 
   return (
     <section className="min-h-screen bg-[#0a0a0a] py-20 px-4 sm:px-6 lg:px-8">
@@ -130,7 +141,8 @@ export default function Portfolio() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.3 }}
-                className="group relative aspect-[3/4] rounded-xl overflow-hidden bg-[#141414] border border-white/5"
+                onClick={() => setSelectedImage(src)} // Открываем фото при клике
+                className="group relative aspect-[3/4] rounded-xl overflow-hidden bg-[#141414] border border-white/5 cursor-pointer"
               >
                 <Image
                   src={src}
@@ -150,6 +162,43 @@ export default function Portfolio() {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Модальное окно (Лайтбокс) */}
+        <AnimatePresence>
+          {selectedImage && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedImage(null)}
+              className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4 md:p-8 backdrop-blur-sm"
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="relative w-full max-w-5xl h-full max-h-[90vh] flex items-center justify-center"
+                onClick={(e) => e.stopPropagation()} // Чтобы клик по фото не закрывал окно
+              >
+                <Image
+                  src={selectedImage}
+                  alt="Full screen view"
+                  fill
+                  className="object-contain"
+                  quality={100}
+                />
+                
+                {/* Кнопка закрытия */}
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  className="absolute top-4 right-4 md:-top-6 md:-right-6 text-white/70 hover:text-[#D4AF37] transition-colors bg-black/50 md:bg-transparent rounded-full p-2"
+                >
+                  <X size={32} />
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </section>
