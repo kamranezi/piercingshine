@@ -15,6 +15,7 @@ import BookingWidget from '@/components/BookingWidget';
 import Safety from '@/components/Safety';
 import Payments from '@/components/Payments';
 import FAQ from '@/components/FAQ'; // <--- 1. Импорт FAQ
+import YandexReviews from '@/components/YandexReviews'; // <--- 1. Импорт
 
 export default function Home() {
   const safetyRef = useRef<HTMLDivElement>(null);
@@ -57,6 +58,8 @@ export default function Home() {
       <InteractiveEar />
       <SpecialOffers />
       <ServicesSection />
+      {/* ОТЗЫВЫ ЯНДЕКС (Новый блок) */}
+      <YandexReviews />
       <StudioSlider />
       
       {/* Преимущества */}

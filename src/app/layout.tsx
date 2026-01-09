@@ -6,11 +6,46 @@ import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({ subsets: ["latin", "cyrillic"] });
 
+// URL вашего сайта (замените на реальный домен, когда он будет, например https://piercingshine.ru)
+// Это нужно, чтобы картинки корректно отображались в соцсетях
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://piercingshine.ru"; 
+
 export const metadata: Metadata = {
-  title: "Piercing Shine | Студия безопасного пирсинга",
-  description: "Профессиональный пирсинг, микродермалы и удаление тату в Москве.",
+  // Базовый URL для разрешения относительных путей картинок
+  metadataBase: new URL(siteUrl),
+  
+  title: "Piercing Shine | Студия безопасного пирсинга в Москве",
+  description: "Профессиональный пирсинг любой сложности, микродермалы и удаление тату. Стерильность 100%, титановые украшения ASTM F-136, обучение мастеров.",
+  keywords: ["пирсинг москва", "студия пирсинга", "прокол ушей", "пирсинг носа", "микродермал", "удаление тату", "piercing shine"],
+  
   icons: {
     icon: '/favicon.svg',
+  },
+
+  // Настройки для Facebook, VK, WhatsApp, Telegram и др.
+  openGraph: {
+    title: "Piercing Shine | Студия безопасного пирсинга",
+    description: "Премиум пирсинг и украшения в Москве. Безопасно. Стерильно. Стильно. Запишись онлайн!",
+    url: siteUrl,
+    siteName: "Piercing Shine",
+    images: [
+      {
+        url: "/pre.png", // Ваша картинка из public
+        width: 1200,
+        height: 630,
+        alt: "Интерьер и работы студии Piercing Shine",
+      },
+    ],
+    locale: "ru_RU",
+    type: "website",
+  },
+
+  // Настройки для Twitter (X)
+  twitter: {
+    card: "summary_large_image",
+    title: "Piercing Shine | Пирсинг в Москве",
+    description: "Студия безопасного пирсинга и профессионального обучения. Украшения из титана и золота.",
+    images: ["/pre.png"], // Та же картинка
   },
 };
 

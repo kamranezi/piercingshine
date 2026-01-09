@@ -170,7 +170,7 @@ export default function Hero() {
           >
             <h2 className="text-xl md:text-2xl font-bold text-white mb-6 flex items-center">
               <span className="w-8 h-[2px] bg-[#D4AF37] mr-3"></span>
-              Популярные проколы
+              Топ проколов
             </h2>
 
             {/* Кнопки навигации */}
