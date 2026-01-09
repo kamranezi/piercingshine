@@ -114,13 +114,13 @@ export default function Masters() {
                   </p>
 
                   <div className="bg-black/30 rounded-xl p-4 space-y-3 border border-white/5">
-                    <div className="flex items-center text-gray-400">
-                      <Clock size={18} className="text-[#D4AF37] mr-3" />
-                      <span className="text-sm">
-                        Прием: <span className="text-white ml-1">{master.schedule}</span>
-                        <span className="mx-2">|</span>
-                        {master.hours}
-                      </span>
+                    <div className="flex items-start text-gray-400">
+                      <Clock size={18} className="text-[#D4AF37] mr-3 mt-0.5 flex-shrink-0" />
+                      <div className="text-sm">
+                        <span>Прием: <span className="text-white ml-1">{master.schedule}</span></span>
+                        <span className="hidden sm:inline mx-2">|</span>
+                        <span className="block sm:inline">{master.hours}</span>
+                      </div>
                     </div>
                     <div className="flex items-center text-gray-400">
                       <BadgeRussianRuble size={18} className="text-[#D4AF37] mr-3" />

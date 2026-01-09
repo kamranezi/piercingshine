@@ -8,7 +8,7 @@ const montserrat = Montserrat({ subsets: ["latin", "cyrillic"] });
 
 // URL вашего сайта (замените на реальный домен, когда он будет, например https://piercingshine.ru)
 // Это нужно, чтобы картинки корректно отображались в соцсетях
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://piercingshine.ru"; 
+const siteUrl = "https://bbatm80c3pebr2enpr6q.containers.yandexcloud.net"; 
 
 export const metadata: Metadata = {
   // Базовый URL для разрешения относительных путей картинок
