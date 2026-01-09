@@ -144,26 +144,26 @@ export default function Contacts() {
 
           </motion.div>
 
-           {/* Правая колонка: Карта */}
-           <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className="h-[510px] bg-[#141414] rounded-2xl overflow-hidden border border-white/5 relative"
-          >
-            {/* Яндекс Карта с точкой PiercingShine */}
-            <iframe 
-              src="https://yandex.ru/map-widget/v1/?ll=37.666427%2C55.785312&mode=search&oid=13580233451&ol=biz&z=16" 
-              width="100%" 
-              height="100%" 
-              frameBorder="0"
-              allowFullScreen={true}
-              style={{ display: "block" }}
-            ></iframe>
-          </motion.div>
+{/* Правая колонка: Карта */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              id="route-slider"
+              className="h-[510px] bg-[#141414] rounded-2xl overflow-hidden border border-white/5 relative"
+            >
+              {/* Яндекс Карта с пешим маршрутом от м. Бауманская до PiercingShine */}
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?mode=routes&rtext=55.772420%2C37.679031~55.776613%2C37.677014&rtt=pd&z=16"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allowFullScreen={true}
+                style={{ display: "block" }}
+              ></iframe>
+            </motion.div>
+          </div>
         </div>
-      </div>
-
       {/* Слайдер с автопрокруткой */}
       <section className="py-12 border-t border-white/10 mb-8">
         <div className="max-w-7xl mx-auto px-4 mb-8">

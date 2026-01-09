@@ -127,7 +127,7 @@ export default function AboutUs() {
                 className="relative h-[400px] md:h-[500px] w-full rounded-3xl overflow-hidden border border-white/10 group"
             >
                 <Image 
-                    src="https://static.tildacdn.com/tild3063-6130-4231-b237-303965656263/_1.jpg" 
+                    src="https://static.tildacdn.com/tild6265-6362-4563-a264-363964623830/_1.png" 
                     alt="Интерьер студии PiercingShine" 
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105" 
