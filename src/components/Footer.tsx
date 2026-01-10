@@ -60,7 +60,12 @@ export default function Footer() {
         <div className="mb-10 flex flex-col items-center space-y-4 text-gray-400 text-sm">
           <a href={yandexMapUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-2 hover:text-white transition-colors">
             <MapPin className="w-4 h-4 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-            <span className="text-left">{contacts.address}</span>
+            <span className="text-left">
+              г. Москва, м. Бауманская,
+              <br className="sm:hidden" />
+              {' '}
+              ул. Бауманская 33/2
+            </span>
           </a>
           <a href={`tel:${contacts.phone.replace(/\s+/g, '')}`} className="inline-flex items-center gap-2 hover:text-white transition-colors">
             <Phone className="w-4 h-4 text-[#D4AF37]" />
