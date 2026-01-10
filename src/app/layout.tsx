@@ -6,23 +6,24 @@ import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({ subsets: ["latin", "cyrillic"] });
 
-// URL вашего сайта (замените на реальный домен, когда он будет, например https://piercingshine.ru)
-// Это нужно, чтобы картинки корректно отображались в соцсетях
-const siteUrl = "https://bbabm8b1degf8gj4rrss.containers.yandexcloud.net"; 
+const siteUrl = "https://bbasid39sv0htst18ktg.containers.yandexcloud.net";
 
 export const metadata: Metadata = {
-  // Базовый URL для разрешения относительных путей картинок
   metadataBase: new URL(siteUrl),
   
   title: "Piercing Shine | Студия безопасного пирсинга Премиум класса на Бауманской",
   description: "Салон пирсинга Валентины Атман, специалиста с огромным опытом работы и собственной программой обучения пирсингу. Премиум пирсинг и украшения в Москве. Безопасно. Стерильно. Стильно. Запишись онлайн на сайте!",
+  
   keywords: ["пирсинг москва", "студия пирсинга", "прокол ушей", "пирсинг носа", "микродермал", "удаление тату", "piercing shine"],
+  
+  authors: [{ name: "Valentina Atman Team" }],
+  creator: "Valentina Atman",
+  publisher: "Valentina Atman",
   
   icons: {
     icon: '/favicon.svg',
   },
 
-  // Настройки для Facebook, VK, WhatsApp, Telegram и др.
   openGraph: {
     title: "Piercing Shine | Студия безопасного пирсинга Премиум класса в Москве на Бауманской",
     description: "Салон пирсинга Валентины Атман, специалиста с огромным опытом работы и собственной программой обучения пирсингу. Премиум пирсинг и украшения в Москве. Безопасно. Стерильно. Стильно. Запишись онлайн прямо на сайте!",
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     siteName: "Piercing Shine",
     images: [
       {
-        url: "/prev.png", // Ваша картинка из public
+        url: "/og-image.jpg", // относительный путь, т.к. есть metadataBase
         width: 1200,
         height: 630,
         alt: "Интерьер и работы студии Piercing Shine",
@@ -40,12 +41,12 @@ export const metadata: Metadata = {
     type: "website",
   },
 
-  // Настройки для Twitter (X)
   twitter: {
     card: "summary_large_image",
     title: "Piercing Shine | Пирсинг в Москве",
     description: "Студия безопасного пирсинга и профессионального обучения. Украшения из титана и золота.",
-    images: ["/prev.png"], // Та же картинка
+    images: ["/og-image.jpg"], // относительный путь
+    creator: "@piercingshine", // опционально, если есть Twitter
   },
 };
 
