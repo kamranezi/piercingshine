@@ -78,7 +78,6 @@ export default function Footer() {
           <p className="mb-2">© {new Date().getFullYear()} Piercing Shine. Все права защищены.</p>
           <div className="flex justify-center space-x-4">
             <Link href="/privacy" className="hover:text-gray-400 transition-colors">Политика конфиденциальности</Link>
-            <Link href="/oferta" className="hover:text-gray-400 transition-colors">Договор оферты</Link>
           </div>
         </div>
 

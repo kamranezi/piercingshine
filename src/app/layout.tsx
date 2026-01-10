@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({ subsets: ["latin", "cyrillic"] });
 
-const siteUrl = "https://bbasid39sv0htst18ktg.containers.yandexcloud.net";
+const siteUrl = "https://bba7ithhnpfpkis17nrl.containers.yandexcloud.net";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
